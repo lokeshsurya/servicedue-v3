@@ -23,7 +23,20 @@ import IndustryLanding from './pages/IndustryLanding'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { AuthProvider } from './context/AuthContext'
 
+import { Navigate } from 'react-router-dom'
+import { useAuth } from './context/AuthContext'
+
 function AppLayout() {
+  const { isAuthenticated, isLoading } = useAuth()
+
+  if (isLoading) {
+    return <div className="flex min-h-screen items-center justify-center">Loading...</div>
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/waitlist" replace />
+  }
+
   return (
     <div className="flex min-h-screen bg-slate-50">
       {/* Sidebar Navigation - Fixed 220px */}
